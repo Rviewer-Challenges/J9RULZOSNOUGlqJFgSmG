@@ -6,6 +6,7 @@ import { Login } from "./components/Login";
 import { About } from "./components/About";
 import { useContext } from "react";
 import FChatContext from "./context/FChatContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App () {
 
@@ -17,9 +18,9 @@ function App () {
         <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<About />} />
-          <Route path="*" element={<Navigate to="/login" replace/>} />
+          <Route path="/chat" element={<PrivateRoute redirectPath="/login"><Chat /></PrivateRoute>} />
+          <Route path="*" element={<Navigate to="/chat" replace/>} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -24,15 +24,19 @@ const FChatContextProvider = (props: FChatProps) => {
     auth.onAuthStateChanged ( (user) => {
 
         if (user) {
-            setUser ({
+            setUser (user);
+            setUserData ({
                 uid: user.uid,    
                 username: user.email,
                 avatar: user.photoURL,
                 name: user.displayName
             });
-        } else setUser ({});
-
+        } else {
+            setUser ({});
+            setUserData ({});
+        }
         setLoadingUser (false);
+
     });
   
     const loginWithGoogle = () => {
@@ -40,6 +44,15 @@ const FChatContextProvider = (props: FChatProps) => {
         const provider = new GoogleAuthProvider ();
         signInWithPopup (auth, provider).then ((result) => {
             
+            setUser (result.user);
+            setUserData  ({
+                uid: result.user.uid,
+                username: result.user.email,
+                avatar: result.user.photoURL,
+                name: result.user.displayName
+            });
+            setErrorUser ({});
+            setLoadingUser (false);
             //const credential = GoogleAuthProvider.credentialFromResult (result);
             //const token      = credential?.accessToken;
             //const user       = result.user;
@@ -51,6 +64,8 @@ const FChatContextProvider = (props: FChatProps) => {
             //const email        = error.customData.email;
             //const credential   = GoogleAuthProvider.credentialFromError (error);
             
+            setUser ({});
+            setUserData ({});
             setErrorUser (error);
             setLoadingUser (false);
         });
