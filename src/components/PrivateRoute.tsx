@@ -9,9 +9,10 @@ type PrivateRouteProps = {
 
 const PrivateRoute = ({redirectPath, children}: PrivateRouteProps) => {
 
-    const {user, loadingUser} = useContext (FChatContext);
+    const {userData, loadingUser} = useContext (FChatContext);
     
-    if (! loadingUser && ! user ) return <Navigate to={redirectPath} replace/>
+    
+    if (! loadingUser && userData?.uid != '') return <Navigate to={redirectPath} replace/>
     return children ? <>{children}</> : <Outlet />;
 
     

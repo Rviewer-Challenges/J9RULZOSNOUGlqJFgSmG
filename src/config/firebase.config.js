@@ -4,7 +4,8 @@ const firebaseConfig = {
     projectId: "fire-chat-rafasanabria1",
     storageBucket: "fire-chat-rafasanabria1.appspot.com",
     messagingSenderId: "56990427317",
-    appId: "1:56990427317:web:f186095704aaf85b21f6fc"
+    appId: "1:56990427317:web:f186095704aaf85b21f6fc",
+    databaseURL: "https://fire-chat-rafasanabria1-default-rtdb.europe-west1.firebasedatabase.app/"
 };    
 
 export default firebaseConfig;

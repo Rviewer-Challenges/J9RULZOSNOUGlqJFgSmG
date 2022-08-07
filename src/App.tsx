@@ -10,7 +10,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App () {
 
-  const {user, userData, loadingUser} = useContext (FChatContext);
+  const {userData, loadingUser} = useContext (FChatContext);
 
   return (
     <div className="App">

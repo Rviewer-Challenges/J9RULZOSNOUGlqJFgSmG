@@ -1,15 +1,25 @@
 import React from 'react'
 
 const FChatContext = React.createContext <{
-    user: Object,
-    userData: Object,
+    userData: {
+        uid: string, 
+        email: string, 
+        username: string, 
+        name: string, 
+        avatar: string
+    },
     loadingUser: Boolean,
     errorUser: Object,
     loginWithGoogle: Function,
     loginWithFacebook: Function
 }> ({
-    user: {},
-    userData: {},
+    userData: {
+        uid: '', 
+        email: '', 
+        username: '', 
+        name: '', 
+        avatar: ''
+    },
     loadingUser: true,
     errorUser: {},
     loginWithGoogle: () => {},
