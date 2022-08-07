@@ -1,0 +1,10 @@
+.login {
+    .item:hover {
+
+        cursor: pointer;
+        color: white!important;
+        background-color: var(--bs-primary);
+    }
+}
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
