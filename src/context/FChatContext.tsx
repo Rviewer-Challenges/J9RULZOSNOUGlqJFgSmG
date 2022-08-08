@@ -11,7 +11,8 @@ const FChatContext = React.createContext <{
     loadingUser: Boolean,
     errorUser: Object,
     loginWithGoogle: Function,
-    loginWithFacebook: Function
+    loginWithFacebook: Function,
+    logout: Function,
 }> ({
     userData: {
         uid: '', 
@@ -23,7 +24,8 @@ const FChatContext = React.createContext <{
     loadingUser: true,
     errorUser: {},
     loginWithGoogle: () => {},
-    loginWithFacebook: () => {}
+    loginWithFacebook: () => {},
+    logout: () => {},
 });
 
 export default FChatContext;
