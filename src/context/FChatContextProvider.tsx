@@ -5,28 +5,23 @@ import firebaseConfig from '../config/firebase.config';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from "firebase/database";
 import { FacebookAuthProvider, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { userDataInterface } from "../types/userDataInterface";
+import { FChatProps } from "../types/FChatProps";
 
-
-type FChatProps = {
-    children: React.ReactNode
-};
 
 const FChatContextProvider = (props: FChatProps) => {
     
-    const app      = initializeApp (firebaseConfig);
-    const database = getDatabase(app);
-
-
-    const auth = getAuth ();
-
-    const [userData, setUserData]       = useState <{uid: string, email: string, username: string, name: string, avatar: string}> ({uid: '', email: '', username: '', name: '', avatar: ''});
+    const app  = initializeApp (firebaseConfig);
+    
+    const [userData, setUserData]       = useState <userDataInterface | null> (null);
     const [loadingUser, setLoadingUser] = useState <boolean> (true);
-    const [errorUser, setErrorUser]     = useState <Object> ({});
-
+    const [errorUser, setErrorUser]     = useState <object | null> (null);
+    
     useEffect ( () => {
-
+        
+        const auth = getAuth ();
         auth.onAuthStateChanged ( (user) => {
-            
+
             if (user) {
                 
                 setUserData ({
@@ -36,26 +31,31 @@ const FChatContextProvider = (props: FChatProps) => {
                     avatar: user.photoURL ? user.photoURL: '',
                     name: user.displayName ? user.displayName: ''
                 });
-                setErrorUser ({});
+                setErrorUser (null);
             } else {
-                setUserData ({uid: '', email: '', username: '', name: '', avatar: ''});
+                setUserData (null);
             }
             setLoadingUser (false);
     
         });
     }, []);
     
+    
     useEffect (() => {
 
-        console.log (userData);
-        // TODO: Escribir a base de datos.
-    }, [userData])
+        const database = getDatabase (app);
+
+        if (userData) set (ref (database, 'users/' + userData.uid), userData);
+
+    }, [userData, app])
     
 
     
   
     const loginWithGoogle = () => {
     
+        const auth = getAuth ();
+
         setLoadingUser (true);
 
         const provider = new GoogleAuthProvider ();
@@ -91,11 +91,13 @@ const FChatContextProvider = (props: FChatProps) => {
 
     const loginWithFacebook = () => {
 
+        const auth = getAuth ();
         setLoadingUser (false);
 
         const provider = new FacebookAuthProvider ();
-        signInWithPopup(auth, provider).then((result) => {
+        signInWithPopup (auth, provider).then((result) => {
         
+            console.log (result.user);
             //const credential = FacebookAuthProvider.credentialFromResult(result);
             //const token      = credential?.accessToken;
             //const user       = result.user;
@@ -117,6 +119,8 @@ const FChatContextProvider = (props: FChatProps) => {
 
     const logout = () => {
 
+        const auth = getAuth ();
+
         setLoadingUser (true);
         signOut (auth).then ( () => {
 
@@ -127,31 +131,10 @@ const FChatContextProvider = (props: FChatProps) => {
             setLoadingUser (false);
         });
     }
-    /*
-    const [u, l, e] = useAuthState (firebase.auth ());
-    useEffect ( () => {
-        
-        if (u !== undefined && u !== null) {
-
-            firebase.firestore ().collection ("users").doc (u.uid).get ().then ( (docData) => {
-
-                if (docData.data ()) setUserData (docData.data ());
-                
-                setUser (u);
-                setLoadingUser (l);
-                setErrorUser (e);
-            });
-        } else {
-            setUser (u);
-            setUserData (null);
-            setLoadingUser (l);
-            setErrorUser (e);
-        }
-    }, [u, l, e]);
-    */
+    
     
     return (
-        <FChatContext.Provider value={{userData, loadingUser, errorUser, loginWithGoogle, loginWithFacebook, logout }}>{props.children}</FChatContext.Provider>
+        <FChatContext.Provider value={{userData, loadingUser, errorUser, loginWithGoogle, loginWithFacebook, logout, app }}>{props.children}</FChatContext.Provider>
     );
 }
 

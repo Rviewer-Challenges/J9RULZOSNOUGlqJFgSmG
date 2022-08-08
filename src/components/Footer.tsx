@@ -1,24 +1,19 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
 
 export const Footer = () => {
   return (
-    <div className="footer">
-        <nav className="navbar navbar-light bg-info text-white">
-            <div className="container-fluid">
-                <div className="text-start">
-                    <span className="navbar-brand text-white">Chat</span>
-                </div>
-                <div className='text-center'>
-                    <NavLink to="/chat" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Chat</NavLink>
-                    <NavLink to="/login" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Login</NavLink>
-                    <NavLink to="/about" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>About</NavLink>
-                </div>
-                <div className="text-end">
-                    Logout &nbsp; <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <footer className='footer border-top mt-5'>
+      <div className='container-fluid container-md'>
+        <div className='row my-4 align-items-center'>
+          <div className="col-12 col-md-8 text text-primary">
+            Firebase Chat - Developed by @rafasanabria1
+          </div>
+          <div className="col-12 col-md-4 icons text-primary">
+            <a className="" href="https://twitter.com/rafasanabria1"  target="_blank" rel="noreferrer"><i className="fa-brands fa-twitter fa-2x"></i></a>
+            <a className=" ms-3" href="https://github.com/rafasanabria1"  target="_blank" rel="noreferrer"><i className="fa-brands fa-github fa-2x"></i></a>
+            <a className=" ms-3" href="https://www.linkedin.com/in/rafasanabria1/" target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin-in fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
   )
 }

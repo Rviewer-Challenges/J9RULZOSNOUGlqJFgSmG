@@ -1,28 +1,11 @@
 import React from 'react'
+import { FChatContextInterface } from '../types/FChatContextInterface';
 
-const FChatContext = React.createContext <{
-    userData: {
-        uid: string, 
-        email: string, 
-        username: string, 
-        name: string, 
-        avatar: string
-    },
-    loadingUser: Boolean,
-    errorUser: Object,
-    loginWithGoogle: Function,
-    loginWithFacebook: Function,
-    logout: Function,
-}> ({
-    userData: {
-        uid: '', 
-        email: '', 
-        username: '', 
-        name: '', 
-        avatar: ''
-    },
+const FChatContext = React.createContext <FChatContextInterface> ({
+    userData: null,
     loadingUser: true,
-    errorUser: {},
+    errorUser: null,
+    app: undefined,
     loginWithGoogle: () => {},
     loginWithFacebook: () => {},
     logout: () => {},

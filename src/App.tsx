@@ -6,11 +6,10 @@ import { Login } from "./components/Login";
 import { About } from "./components/About";
 import { useContext } from "react";
 import FChatContext from "./context/FChatContext";
-import PrivateRoute from "./components/PrivateRoute";
 
 function App () {
 
-  const {userData, loadingUser} = useContext (FChatContext);
+  const {userData} = useContext (FChatContext);
 
   return (
     <div className="App">
@@ -19,8 +18,17 @@ function App () {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
-          <Route path="/chat" element={<PrivateRoute redirectPath="/login"><Chat /></PrivateRoute>} />
-          <Route path="*" element={<Navigate to="/chat" replace/>} />
+          <Route path="/chat" element={<Chat />} />
+          { 
+            userData && (
+              <Route path="*" element={<Navigate to="/chat" replace/>} />
+            )
+          }
+          {
+            ! userData && (
+              <Route path="*" element={<Navigate to="/login" replace/>} />
+            )
+          }
         </Routes>
         <Footer />
       </BrowserRouter>

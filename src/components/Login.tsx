@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext'
 
 export const Login = () => {
   
-  const {loginWithGoogle, loginWithFacebook} = useContext (FChatContext);  
+  const {userData, loginWithGoogle, loginWithFacebook} = useContext (FChatContext);  
+
+  if (userData) return <Navigate to="/chat" replace />;
 
   return (
     <div className="login">
