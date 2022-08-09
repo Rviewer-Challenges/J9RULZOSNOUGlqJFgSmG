@@ -1,9 +1,9 @@
 
 export const Footer = () => {
   return (
-    <footer id="footer" className='footer py-4'>
+    <footer id="footer" className='footer border-top d-flex align-items-center' style={{height: '80px'}}>
         <div className='container'>
-        <div className='row align-items-center'>
+        <div className='row'>
           <div className="col-12 col-md-8 text text-primary">
             Firebase Chat - Developed by @rafasanabria1
           </div>

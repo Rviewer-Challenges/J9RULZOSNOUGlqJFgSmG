@@ -56,13 +56,20 @@ export const Chat = () => {
             setLoading (false);
         });
 
-    }, [users])
+    }, [users]);
+
+    useEffect ( () => {
+
+        if (document.getElementById ('scroll')) {
+            document.getElementById ('scroll')!.scrollTo (0, document.getElementById ('scroll')!.scrollHeight);
+        }
+    }, [messages]);
     
     if (! userData) return <Navigate to="/login" replace />;   
 
     return (
         <section id="chat" className="chat">
-            <div className="container-xl py-3 d-flex flex-column justify-content-end contenedor">
+            <div className="container-xl py-3 d-flex flex-column justify-content-end contenedor" style={{height: '100%'}}>
                 {
                     loading && (
                         <div className="row">
@@ -83,7 +90,7 @@ export const Chat = () => {
                 }
                 {
                     ! loading && messages.length > 0 && (
-                        <div className='scroll'>
+                        <div id="scroll" className='scroll' style={{overflowY: 'scroll'}}>
                             { 
                                 messages.map ( (elem) => {
                                     return (<Message msg={elem.msg} author={elem.author} key={elem.key}/>)
