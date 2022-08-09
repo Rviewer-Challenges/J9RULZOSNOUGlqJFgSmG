@@ -20,7 +20,10 @@ export const Header = () => {
                                 <nav className="d-flex justify-content-around">
                                     {
                                         userData && (
-                                            <NavLink to="/chat" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Chat</NavLink>
+                                            <>
+                                                <NavLink to="/chat" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Chat</NavLink>
+                                                <NavLink to="/profile" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Perfil</NavLink>
+                                            </>
                                         )
                                     }
                                     {
