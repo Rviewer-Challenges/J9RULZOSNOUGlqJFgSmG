@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext'
 
@@ -6,11 +6,23 @@ export const Login = () => {
   
   const {userData, loadingUser, loginWithGoogle, loginWithFacebook} = useContext (FChatContext);  
 
+  useEffect (() => {
+    
+    const header_height = document.getElementById ('header')!.clientHeight;
+    const footer_height = document.getElementById ('footer')!.clientHeight;
+    const window_height = window.innerHeight;
+  
+    if (document.getElementById ('login')) {
+        document.getElementById ('login')!.style.height = (window_height - header_height - footer_height).toString () + "px";
+    }
+  
+  }, []);
+  
   if (userData) return <Navigate to="/chat" replace />;
 
   return (
-    <section className="login my-3">
-      <div className="container-xl my-3">
+    <section id="login" className="login">
+      <div className="container-xl py-3 d-flex flex-column justify-content-center" style={{height: "100%"}}>
         {
           loadingUser && (
             <div className="row">

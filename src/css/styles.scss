@@ -1,5 +1,17 @@
-.header {
+.header, .footer {
     height: 80px;
+}
+
+.chat {
+
+    .contenedor {
+        height: 100%;
+    }
+
+    .scroll {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
 }
 
 .login {

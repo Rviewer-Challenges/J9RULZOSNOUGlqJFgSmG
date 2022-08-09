@@ -7,7 +7,7 @@ export const Header = () => {
     const {userData, loadingUser, logout} = useContext (FChatContext);
 
     return (
-        <header className="header bg-primary text-white py-4">
+        <header id="header" className="header bg-primary text-white py-4">
             {
                 ! loadingUser && (
 

@@ -15,7 +15,8 @@ export const Message: React.FC<MessageInterface> = ({msg, author}) => {
     const class_message = inOut === 'in' ? "in-message bg-primary " : "out-message bg-success offset-xl-2";
     const class_reverse = inOut === 'in' ? "" : "flex-row-reverse";
     const class_img = inOut === 'in' ? "me-2" : "ms-2";
-    const class_txt = inOut === 'in' ? "text-start" : "text-end";
+    const class_align_txt = inOut === 'in' ? "text-start" : "text-end";
+    const class_align_date = inOut === 'in' ? "text-end" : "text-start";
 
     
     const formatFecha = (fecha_raw:number) => {
@@ -36,10 +37,10 @@ export const Message: React.FC<MessageInterface> = ({msg, author}) => {
                         {author.username}
                     </div>
                 </div>
-                <div className={"text p-2 " + class_txt}>
+                <div className={"text p-2 " + class_align_txt}>
                     {msg.msg}
                 </div>
-                <div className="fecha small fw-light fst-italic ">
+                <div className={"fecha small fw-light fst-italic " + class_align_date}>
                     { formatFecha (msg.sendDate) }
                 </div>
             </div>

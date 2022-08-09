@@ -13,7 +13,15 @@ export const Chat = () => {
     const [users, setUsers]       = useState<any> ({});
 
     useEffect (() => {
-        
+
+        const header_height = document.getElementById ('header')!.clientHeight;
+        const footer_height = document.getElementById ('footer')!.clientHeight;
+        const window_height = window.innerHeight;
+      
+        if (document.getElementById ('chat')) {
+            document.getElementById ('chat')!.style.height = (window_height - header_height - footer_height).toString () + "px";
+        }
+
         const database   = getDatabase ();
         const usersRef   = ref (database, 'users');
         const usersQuery = query (usersRef);
@@ -53,8 +61,8 @@ export const Chat = () => {
     if (! userData) return <Navigate to="/login" replace />;   
 
     return (
-        <section className="chat my-3 fs-6">
-            <div className="container-xl ">
+        <section id="chat" className="chat">
+            <div className="container-xl py-3 d-flex flex-column justify-content-end contenedor">
                 {
                     loading && (
                         <div className="row">
@@ -75,9 +83,13 @@ export const Chat = () => {
                 }
                 {
                     ! loading && messages.length > 0 && (
-                        messages.map ( (elem) => {
-                            return (<Message msg={elem.msg} author={elem.author} key={elem.key}/>)
-                        })
+                        <div className='scroll'>
+                            { 
+                                messages.map ( (elem) => {
+                                    return (<Message msg={elem.msg} author={elem.author} key={elem.key}/>)
+                                })
+                            }
+                        </div>
                     )
                 }
                 {

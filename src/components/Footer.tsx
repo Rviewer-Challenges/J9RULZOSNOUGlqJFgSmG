@@ -1,9 +1,9 @@
 
 export const Footer = () => {
   return (
-    <footer className='footer border-top mt-5'>
-      <div className='container-fluid container-md'>
-        <div className='row my-4 align-items-center'>
+    <footer id="footer" className='footer py-4'>
+        <div className='container'>
+        <div className='row align-items-center'>
           <div className="col-12 col-md-8 text text-primary">
             Firebase Chat - Developed by @rafasanabria1
           </div>
