@@ -8,35 +8,40 @@ export const Header = () => {
 
     return (
         <header className="header bg-primary text-white py-4">
-            <div className="container ">
-                <div className="row align-items-center">
-                    <div className="col-md-4 text-start">
-                        <span className="brand">Firebase Chat</span>
+            {
+                ! loadingUser && (
+
+                    <div className="container ">
+                        <div className="row align-items-center">
+                            <div className="col-md-4 text-start">
+                                <span className="brand">Firebase Chat</span>
+                            </div>
+                            <div className="col-md-4 text-center">
+                                <nav className="d-flex justify-content-around">
+                                    {
+                                        userData && (
+                                            <NavLink to="/chat" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Chat</NavLink>
+                                        )
+                                    }
+                                    {
+                                        ! userData && (
+                                            <NavLink to="/login" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Login</NavLink>
+                                        )
+                                    }                        
+                                    <NavLink to="/about" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>About</NavLink>
+                                </nav>
+                            </div>
+                            <div className="col-md-4 text-end">
+                                { 
+                                    userData && (
+                                        <button className='btn btn-sm btn-danger' onClick={() => logout()}>Logout <i className="fa-solid fa-arrow-right-from-bracket"></i></button>
+                                    )
+                                }
+                            </div>
+                        </div>  
                     </div>
-                    <div className="col-md-4 text-center">
-                        <nav className="d-flex justify-content-around">
-                            {
-                                ! loadingUser && userData && (
-                                    <NavLink to="/chat" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Chat</NavLink>
-                                )
-                            }
-                            {
-                                ! loadingUser && ! userData && (
-                                    <NavLink to="/login" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>Login</NavLink>
-                                )
-                            }                        
-                            <NavLink to="/about" className={({isActive}) => ('nav-link ' + (isActive ? "active fw-bold" : ''))}>About</NavLink>
-                        </nav>
-                    </div>
-                    <div className="col-md-4 text-end">
-                        { 
-                            !loadingUser && userData && (
-                                <button className='btn btn-sm btn-danger' onClick={() => logout()}>Logout <i className="fa-solid fa-arrow-right-from-bracket"></i></button>
-                            )
-                        }
-                    </div>
-                </div>  
-            </div>
+                )
+            }
         </header>
     )
 }

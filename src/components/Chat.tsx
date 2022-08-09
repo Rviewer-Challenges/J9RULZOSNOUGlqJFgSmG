@@ -14,8 +14,8 @@ export const Chat = () => {
 
     useEffect (() => {
         
-        const database    = getDatabase ();
-        const usersRef    = ref (database, 'users');
+        const database   = getDatabase ();
+        const usersRef   = ref (database, 'users');
         const usersQuery = query (usersRef);
 
         onValue (usersQuery, (snapshot) => {
@@ -26,8 +26,8 @@ export const Chat = () => {
 
     useEffect (() => {
 
-        const database    = getDatabase ();
-        const messagesRef = ref (database, 'messages');
+        const database     = getDatabase ();
+        const messagesRef  = ref (database, 'messages');
         const messageQuery = query (messagesRef, orderByChild ('sendDate'));
     
         onValue (messageQuery, (snapshot) => {
@@ -36,8 +36,8 @@ export const Chat = () => {
 
             snapshot.forEach ((snap:DataSnapshot) => {
                 
-                const key  = snap.key;
-                const msg  = snap.val ();
+                const key    = snap.key;
+                const msg    = snap.val ();
                 const author = users[msg.authorUid];
                 newMessages.push ({key, msg, author});
             });

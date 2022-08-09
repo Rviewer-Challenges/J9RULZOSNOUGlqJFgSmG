@@ -3,7 +3,7 @@ import FChatContext from "./FChatContext";
 
 import firebaseConfig from '../config/firebase.config';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import { FacebookAuthProvider, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { userDataInterface } from "../types/userDataInterface";
 import { FChatProps } from "../types/FChatProps";
@@ -27,9 +27,9 @@ const FChatContextProvider = (props: FChatProps) => {
                 setUserData ({
                     uid: user.uid,    
                     email: user.email ? user.email : '',
-                    username: user.email ? user.email: '',
-                    avatar: user.photoURL ? user.photoURL: '',
-                    name: user.displayName ? user.displayName: ''
+                    username: user.email ? user.email.substring (0, user.email.indexOf ('@')) : '',
+                    avatar: user.photoURL ? user.photoURL : '',
+                    name: user.displayName ? user.displayName : ''
                 });
                 setErrorUser (null);
             } else {
@@ -43,10 +43,14 @@ const FChatContextProvider = (props: FChatProps) => {
     
     useEffect (() => {
 
-        const database = getDatabase ();
-
-        if (userData) set (ref (database, 'users/' + userData.uid), userData);
-
+        if (userData) {
+            
+            const database = getDatabase ();
+            const usersRef = ref (database, `users/${userData.uid}`);
+            onValue  (usersRef, (snapshot) => {
+                if (! snapshot.exists ()) set (ref (database, 'users/' + userData.uid), userData);
+            });
+        }
     }, [userData])
     
 
