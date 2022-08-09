@@ -1,6 +1,7 @@
 import { child, getDatabase, push, ref, serverTimestamp, set } from 'firebase/database';
 import { useContext } from 'react'
 import FChatContext from '../context/FChatContext';
+import { userDataInterface } from '../types/userDataInterface';
 
 export const FormMessage = () => {
 
@@ -8,25 +9,31 @@ export const FormMessage = () => {
 
     const handleSubmit = (e:any) => {
 
-        const database = getDatabase (app);
         e.preventDefault ();
         
-        if (e.target.mensaje.value !== '') {
+        if (e.target.mensaje.value !== '' && userData) {
             
-            const mensaje = {
+            const msg = {
                 author: userData,
                 message: e.target.mensaje.value,
                 sendDate: serverTimestamp ()
             };
             
-            const messageId = push (child (ref (database), 'messages'), userData).key;
-            set (ref (database, 'messages/' + messageId), mensaje);
+            sendMessage (msg);
 
             e.target.mensaje.value = '';
-            
         }
         
     };
+
+    const sendMessage = (msg:{author: userDataInterface, message: any, sendDate: object}) => {
+
+        const database = getDatabase (app);
+
+        const messageUid = push (child (ref (database), 'messages'), userData).key;
+        set (ref (database, 'messages/' + messageUid), {...msg, uid: messageUid});
+        return;
+    }
   
     return (
         <form onSubmit={(e) => handleSubmit (e)}>

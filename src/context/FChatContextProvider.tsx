@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FChatContext from "./FChatContext";
 
 import firebaseConfig from '../config/firebase.config';
@@ -56,8 +56,6 @@ const FChatContextProvider = (props: FChatProps) => {
     
         const auth = getAuth ();
 
-        setLoadingUser (true);
-
         const provider = new GoogleAuthProvider ();
         signInWithPopup (auth, provider).then ((result) => {
             
@@ -84,7 +82,6 @@ const FChatContextProvider = (props: FChatProps) => {
             
             setUserData ({uid: '', email: '', username: '', name: '', avatar: ''});
             setErrorUser (error);
-            setLoadingUser (false);
         });
     }
 
@@ -92,8 +89,7 @@ const FChatContextProvider = (props: FChatProps) => {
     const loginWithFacebook = () => {
 
         const auth = getAuth ();
-        setLoadingUser (false);
-
+        
         const provider = new FacebookAuthProvider ();
         signInWithPopup (auth, provider).then((result) => {
         
@@ -112,7 +108,6 @@ const FChatContextProvider = (props: FChatProps) => {
 
             setUserData ({uid: '', email: '', username: '', name: '', avatar: ''});
             setErrorUser (error);
-            setLoadingUser (false);
         });
     }
 
@@ -121,14 +116,12 @@ const FChatContextProvider = (props: FChatProps) => {
 
         const auth = getAuth ();
 
-        setLoadingUser (true);
         signOut (auth).then ( () => {
 
         }).catch ( (error) => {
 
             setUserData ({uid: '', email: '', username: '', name: '', avatar: ''});
             setErrorUser (error);
-            setLoadingUser (false);
         });
     }
     

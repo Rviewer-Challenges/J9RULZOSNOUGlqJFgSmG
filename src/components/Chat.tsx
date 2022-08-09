@@ -1,5 +1,5 @@
 import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
-import React, { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext';
 import { FormMessage } from './FormMessage';
@@ -7,59 +7,59 @@ import { Message } from './Message'
 
 export const Chat = () => {
 
-    const {userData} = useContext (FChatContext);  
-    const [messages, setMessages] = useState<[]> ([]);
+    const {userData}              = useContext (FChatContext);
+    const [loading, setLoading]   = useState<boolean> (true);
+    const [messages, setMessages] = useState<any[]> ([]);
 
-    if (! userData) return <Navigate to="/login" replace />;
-
-
-    const user1 = {
-        username: "@rafasanabria",
-        avatar: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-    };
-
-    const user2 = {
-        username: "@vicky",
-        avatar: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-    };
-
-    const lorem = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, vero impedit ab iusto blanditiis officia dicta, facilis libero laboriosam assumenda voluptatibus, repellendus possimus officiis esse repellat tenetur aut quia inventore?";
-
-    const database       = getDatabase ();
-    const messageListRef = ref (database, 'messages');
-    //const messageList = query (messageListRef, orderByChild ('sendDate'));
-
-    onValue (messageListRef, (snapshot) => {
-        const newmessages = snapshot.val ();
-        console.log (newmessages);
-        setMessages (newmessages);
-      });
+    useEffect (() => {
+        
+        const database       = getDatabase ();
+        const messageListRef = ref (database, 'messages');
+        const messageList = query (messageListRef, orderByChild ('sendDate'));
+    
+    
+        onValue (messageList, (snapshot) => {
+            
+            if (snapshot.size > 0) setMessages (Object.values (snapshot.val ()));
+            else setMessages ([]);
+            setLoading (false);
+        });
+    
+    }, []);
+    
+    if (! userData) return <Navigate to="/login" replace />;   
 
     return (
         <section className="chat my-3 fs-6">
             <div className="container-xl ">
                 {
-                    messages.length > 0 && (
-                        messages.map (message => {
-                            console.log (message);
-                            return <></>
-                            //return (<Message user={message.user} message={message.message} inOut="out" />)
+                    loading && (
+                        <div className="row">
+                            <div className="col text-center h3 d-flex align-items-center justify-content-center text-primary py-5">
+                                <i className='fa fa-spinner fa-spin fa-2x ms-3' />
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    ! loading && messages.length <= 0 && (
+                        <div className="row">
+                            <div className="col text-center h3 d-flex align-items-center justify-content-center text-primary py-5">
+                                ¡Comienza a enviar mensajes!
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    ! loading && messages.length > 0 && (
+                        messages.map ( (msg, index) => {
+                            return (<Message msg={msg} key={index}/>)
                         })
                     )
                 }
-                <Message user={user2} message={lorem} inOut="in" />
-            
-                <Message user={user2} message={lorem} inOut="in" />
-            
-                <Message user={user1} message={lorem} inOut="out" />
-            
-                <Message user={user2} message={lorem} inOut="in" />
-            
-                <Message user={user1} message={lorem} inOut="out" />
-            
-                <Message user={user1} message={lorem} inOut="out" />
-
-                <FormMessage />
+                {
+                    ! loading && (<FormMessage />)
+                }
             </div>
         </section>
     )
