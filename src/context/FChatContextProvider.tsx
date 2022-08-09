@@ -11,7 +11,7 @@ import { FChatProps } from "../types/FChatProps";
 
 const FChatContextProvider = (props: FChatProps) => {
     
-    const app  = initializeApp (firebaseConfig);
+    initializeApp (firebaseConfig);
     
     const [userData, setUserData]       = useState <userDataInterface | null> (null);
     const [loadingUser, setLoadingUser] = useState <boolean> (true);
@@ -43,11 +43,11 @@ const FChatContextProvider = (props: FChatProps) => {
     
     useEffect (() => {
 
-        const database = getDatabase (app);
+        const database = getDatabase ();
 
         if (userData) set (ref (database, 'users/' + userData.uid), userData);
 
-    }, [userData, app])
+    }, [userData])
     
 
     
@@ -127,7 +127,7 @@ const FChatContextProvider = (props: FChatProps) => {
     
     
     return (
-        <FChatContext.Provider value={{userData, loadingUser, errorUser, loginWithGoogle, loginWithFacebook, logout, app }}>{props.children}</FChatContext.Provider>
+        <FChatContext.Provider value={{userData, loadingUser, errorUser, loginWithGoogle, loginWithFacebook, logout }}>{props.children}</FChatContext.Provider>
     );
 }
 

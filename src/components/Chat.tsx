@@ -1,4 +1,4 @@
-import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
+import { DataSnapshot, getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
 import { useContext, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext';
@@ -10,22 +10,45 @@ export const Chat = () => {
     const {userData}              = useContext (FChatContext);
     const [loading, setLoading]   = useState<boolean> (true);
     const [messages, setMessages] = useState<any[]> ([]);
+    const [users, setUsers]       = useState<any> ({});
 
     useEffect (() => {
         
-        const database       = getDatabase ();
-        const messageListRef = ref (database, 'messages');
-        const messageList = query (messageListRef, orderByChild ('sendDate'));
+        const database    = getDatabase ();
+        const usersRef    = ref (database, 'users');
+        const usersQuery = query (usersRef);
+
+        onValue (usersQuery, (snapshot) => {
+
+            setUsers (snapshot.val());
+        });
+    }, []);
+
+    useEffect (() => {
+
+        const database    = getDatabase ();
+        const messagesRef = ref (database, 'messages');
+        const messageQuery = query (messagesRef, orderByChild ('sendDate'));
     
+        onValue (messageQuery, (snapshot) => {
     
-        onValue (messageList, (snapshot) => {
-            
-            if (snapshot.size > 0) setMessages (Object.values (snapshot.val ()));
+            const newMessages:any[] = [];
+
+            snapshot.forEach ((snap:DataSnapshot) => {
+                
+                const key  = snap.key;
+                const msg  = snap.val ();
+                const author = users[msg.authorUid];
+                newMessages.push ({key, msg, author});
+            });
+
+            if (newMessages.length > 0) setMessages (newMessages);
             else setMessages ([]);
+
             setLoading (false);
         });
-    
-    }, []);
+
+    }, [users])
     
     if (! userData) return <Navigate to="/login" replace />;   
 
@@ -52,8 +75,8 @@ export const Chat = () => {
                 }
                 {
                     ! loading && messages.length > 0 && (
-                        messages.map ( (msg, index) => {
-                            return (<Message msg={msg} key={index}/>)
+                        messages.map ( (elem) => {
+                            return (<Message msg={elem.msg} author={elem.author} key={elem.key}/>)
                         })
                     )
                 }

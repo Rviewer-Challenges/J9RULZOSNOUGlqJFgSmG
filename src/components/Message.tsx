@@ -1,17 +1,16 @@
 import moment from 'moment';
 import React, { useContext } from 'react'
 import FChatContext from '../context/FChatContext';
+import { MessageInterface } from '../types/MessageInterface';
 
-interface PropsInterface {
-    msg: any
-}
-export const Message: React.FC<PropsInterface> = ({msg}) => {
+
+export const Message: React.FC<MessageInterface> = ({msg, author}) => {
     
     const {loadingUser, userData} = useContext (FChatContext);
 
-    if (loadingUser || ! userData) return <></>;
+    if (loadingUser || ! userData || !author) return <></>;
     
-    let inOut = (userData.uid !== msg.author.uid) ? 'in' : 'out';
+    let inOut = (userData.uid !== author.uid) ? 'in' : 'out';
 
     const class_message = inOut === 'in' ? "in-message bg-primary " : "out-message bg-success offset-xl-2";
     const class_reverse = inOut === 'in' ? "" : "flex-row-reverse";
@@ -31,14 +30,14 @@ export const Message: React.FC<PropsInterface> = ({msg}) => {
             <div className={"col-xl-10 p-2 message text-white rounded-4 " + class_message }>
                 <div className={"user px-2 py-1 d-flex border-bottom border-white align-items-center " + class_reverse }>
                     <div className="avatar">
-                        {msg.author.avatar && (<img src={msg.author.avatar} width="40" height="40" className={"rounded-circle d-flex align-self-center border-white " + class_img} alt={msg.author.username} />)}
+                        {author.avatar && (<img src={author.avatar} width="25" height="25" className={"rounded-circle d-flex align-self-center border-white " + class_img} alt={author.username} />)}
                     </div>
                     <div className="username fw-bold">
-                        {msg.author.username}
+                        {author.username}
                     </div>
                 </div>
                 <div className={"text p-2 " + class_txt}>
-                    {msg.message}
+                    {msg.msg}
                 </div>
                 <div className="fecha small fw-light fst-italic ">
                     { formatFecha (msg.sendDate) }
