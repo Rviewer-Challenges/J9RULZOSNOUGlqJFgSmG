@@ -40,7 +40,7 @@ export const Message: React.FC<MessageInterface> = ({msg, author}) => {
                         </div>
                     )
                 }
-                <div className={"text py-2 ps-2 pe-5 " + class_align_txt}>
+                <div className={"text py-3 ps-2 pe-5 " + class_align_txt}>
                     {msg.msg}
                 </div>
                 <div className="fecha small fw-light fst-italic text-end" style={{position: 'absolute', bottom: '0px', right: '10px'}}>

@@ -4,7 +4,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Login } from "./components/Login";
 import { About } from "./components/About";
-import { Perfil } from "./components/Perfil";
+import { Profile } from "./components/Profile";
 import { useContext } from "react";
 import FChatContext from "./context/FChatContext";
 
@@ -20,7 +20,7 @@ function App () {
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/chat" element={<Chat />} />
-          <Route path="/profile" element={<Perfil />} />
+          <Route path="/profile" element={<Profile />} />
           { 
             userData && (
               <Route path="*" element={<Navigate to="/chat" replace/>} />

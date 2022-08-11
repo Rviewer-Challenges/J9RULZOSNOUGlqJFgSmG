@@ -23,14 +23,33 @@ const FChatContextProvider = (props: FChatProps) => {
         auth.onAuthStateChanged ( (user) => {
 
             if (user) {
-                
-                setUserData ({
-                    uid: user.uid,    
-                    email: user.email ? user.email : '',
-                    username: user.email ? user.email.substring (0, user.email.indexOf ('@')) : '',
-                    avatar: user.photoURL ? user.photoURL : '',
-                    name: user.displayName ? user.displayName : ''
+
+                const database = getDatabase ();
+                const userRef = ref (database, `users/${user.uid}`);
+                onValue (userRef, (snapshot) => {
+                    if (snapshot.exists ()) {
+
+                        const u = snapshot.val ();
+
+                        setUserData ({
+                            uid: u.uid,
+                            email: u.email,
+                            username: u.username,
+                            avatar: u.avatar,
+                            name: u.name
+                        });
+                    } else {
+
+                        setUserData ({
+                            uid: user.uid,    
+                            email: user.email ? user.email : '',
+                            username: user.email ? user.email.substring (0, user.email.indexOf ('@')) : '',
+                            avatar: user.photoURL ? user.photoURL : '',
+                            name: user.displayName ? user.displayName : ''
+                        })
+                    }
                 });
+                
                 setErrorUser (null);
             } else {
                 setUserData (null);
@@ -48,7 +67,9 @@ const FChatContextProvider = (props: FChatProps) => {
             const database = getDatabase ();
             const usersRef = ref (database, `users/${userData.uid}`);
             onValue  (usersRef, (snapshot) => {
-                if (! snapshot.exists ()) set (ref (database, 'users/' + userData.uid), userData);
+                if (! snapshot.exists ()) {
+                    set (ref (database, 'users/' + userData.uid), userData);
+                }
             });
         }
     }, [userData])
