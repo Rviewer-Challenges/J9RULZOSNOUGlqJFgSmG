@@ -40,8 +40,10 @@ export const Message: React.FC<MessageInterface> = ({msg, author}) => {
                         </div>
                     )
                 }
-                <div className={"text py-3 ps-2 pe-5 " + class_align_txt}>
-                    {msg.msg}
+                <div className={"text py-3 ps-2 " + class_align_txt}>
+                    {
+                        (! msg.type || msg.type === '' || msg.type === 'text') ? (msg.msg) : (<img src={msg.msg} alt="" className='mw-100' />)
+                    }
                 </div>
                 <div className="fecha small fw-light fst-italic text-end" style={{position: 'absolute', bottom: '0px', right: '10px'}}>
                     { formatFecha (msg.sendDate) }
