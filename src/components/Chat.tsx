@@ -2,6 +2,7 @@ import { DataSnapshot, getDatabase, onValue, orderByChild, query, ref } from 'fi
 import { useContext, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext';
+import registerFixHeight from '../utils/Utils';
 import { FormMessage } from './FormMessage';
 import { Message } from './Message'
 
@@ -14,13 +15,7 @@ export const Chat = () => {
 
     useEffect (() => {
 
-        const header_height = document.getElementById ('header')!.clientHeight;
-        const footer_height = document.getElementById ('footer')!.clientHeight;
-        const window_height = window.innerHeight;
-      
-        if (document.getElementById ('chat')) {
-            document.getElementById ('chat')!.style.height = (window_height - header_height - footer_height).toString () + "px";
-        }
+        registerFixHeight ('chat');
 
         const database   = getDatabase ();
         const usersRef   = ref (database, 'users');

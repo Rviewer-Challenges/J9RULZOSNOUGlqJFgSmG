@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import FChatContext from '../context/FChatContext'
+import registerFixHeight from '../utils/Utils';
 
 export const Login = () => {
   
@@ -8,14 +9,7 @@ export const Login = () => {
 
   useEffect (() => {
     
-    const header_height = document.getElementById ('header')!.clientHeight;
-    const footer_height = document.getElementById ('footer')!.clientHeight;
-    const window_height = window.innerHeight;
-  
-    if (document.getElementById ('login')) {
-        document.getElementById ('login')!.style.height = (window_height - header_height - footer_height).toString () + "px";
-    }
-  
+    registerFixHeight ('login');
   }, []);
   
   if (userData) return <Navigate to="/chat" replace />;
