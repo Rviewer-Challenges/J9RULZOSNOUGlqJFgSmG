@@ -4,7 +4,7 @@ import FChatContext from '../context/FChatContext';
 import { MessageInterface } from '../types/MessageInterface';
 
 
-export const Message: React.FC<MessageInterface> = ({msg, author}) => {
+export const Message: React.FC<MessageInterface> = ({msg, author, idmsg}) => {
     
     const {loadingUser, userData} = useContext (FChatContext);
 
@@ -42,7 +42,7 @@ export const Message: React.FC<MessageInterface> = ({msg, author}) => {
                 }
                 <div className={"text py-3 ps-2 " + class_align_txt}>
                     {
-                        (! msg.type || msg.type === '' || msg.type === 'text') ? (msg.msg) : (<img src={msg.msg} alt="" className='mw-100' />)
+                        (! msg.type || msg.type === '' || msg.type === 'text') ? (msg.msg) : (<img id={idmsg} src={msg.msg} className="mb-2" style={{maxWidth: '25%'}} alt="" onClick={() => document.getElementById(idmsg)?.requestFullscreen ()} />)
                     }
                 </div>
                 <div className="fecha small fw-light fst-italic text-end" style={{position: 'absolute', bottom: '0px', right: '10px'}}>

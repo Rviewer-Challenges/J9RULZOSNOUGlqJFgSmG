@@ -5,5 +5,7 @@ export interface MessageInterface {
         type: string,
         sendDate: number
     },
-    author: any
+    author: any,
+    key: string,
+    idmsg: string
 }

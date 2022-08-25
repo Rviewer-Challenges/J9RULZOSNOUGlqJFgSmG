@@ -93,7 +93,7 @@ export const Chat = () => {
                         <div id="scroll" className='scroll' style={{overflowY: 'scroll'}}>
                             { 
                                 messages.map ( (elem) => {
-                                    return (<Message msg={elem.msg} author={elem.author} key={elem.key}/>)
+                                    return (<Message msg={elem.msg} author={elem.author} key={elem.key} idmsg={elem.key}/>)
                                 })
                             }
                         </div>
