@@ -8,8 +8,7 @@ export const FormMessage = () => {
     const {userData}                          = useContext (FChatContext);
     const [errorUploading, setErrorUploading] = useState ('');
     const [file, setFile]                     = useState<any> (null);
-    const [fileURL, setFileURL]               = useState ();
-
+    
     useEffect ( () => {
       
         if (file) {
@@ -106,7 +105,7 @@ export const FormMessage = () => {
     return (
         <form className='form-mensaje' id="form-mensaje" onSubmit={(e) => handleSubmitMessage (e)}>
             {
-                errorUploading != '' && (
+                errorUploading !== '' && (
                     <div className="row">
                         <div className="col px-2">
                             <div className="alert alert-danger mt-3" role="alert">
