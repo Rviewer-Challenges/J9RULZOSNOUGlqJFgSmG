@@ -1,46 +1,26 @@
-# Getting Started with Create React App
+# Bienvenidos a Firebase Chat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**[https://fire-chat-rafasanabria1.web.app/](https://fire-chat-rafasanabria1.web.app/)** 
+Aquí podrás enviar y recibir mensajes de texto o fotografías en tiempo real.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Sobre el proyecto
 
-### `npm start`
+Esta APP ha sido desarrollada por [@rafasanabria1](https://github.com/rafasanabria1) utilizando ReactJS & Bootstrap para completar el reto mensual de [@mourdev](https://www.twitch.tv/mouredev).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Puedes encontrar el código de esta APP en este repositorio de [GitHub](https://github.com/rafasanabria1/firebase-chat-mouredev-challenge) y más información sobre los retos mensaules de [@mouredev](https://www.twitch.tv/mouredev) en este otro repositorio de [GitHub](https://github.com/mouredev/Monthly-App-Challenge-2022). Además de en su partner [@rviewer](https://go.rviewer.io/dev-firebase-chat-es/?utm_source=mouredev&utm_medium=github_repo&utm_campaign=firebase_chat_mouredevv).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Como desplegar
+w
+```
+git clone https://github.com/rafasanabria1/firebase-chat-mouredev-challenge.git
+cd firebase-chat-mouredev-challenge
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## APP Live
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Puedes ver la aplicación desplegada en Firebase Hosting en [https://fire-chat-rafasanabria1.web.app](https://fire-chat-rafasanabria1.web.app)
